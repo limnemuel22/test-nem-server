@@ -3,12 +3,29 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var animalsRouter = require('./routes/animals');
+var moviesRouter = require('./routes/movies');
 
 var app = express();
+
+
+// local localhost:3000/test_database
+mongoose.connect(
+  "mongodb+srv://nemuel:khazlie22@cluster0-exkab.mongodb.net/test_database", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  err => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("connected to database");
+    }
+  }
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/animals', animalsRouter);
+app.use('/api/v1/movies', moviesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
