@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Movies = require('../schemas/movies');
 
-router.get('/', function (req, res, next) {
-    Movies.find((error, result) => {
+router.get('/', async function (req, res, next) {
+    await Movies.find((error, result) => {
         if (error) {
             res.send({
                 status: false,
